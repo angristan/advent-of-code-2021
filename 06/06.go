@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func reproduce(fishes map[int]int, days int) int {
+func reproduce(fishes []int, days int) int {
 	for i := 0; i < days; i++ {
 		// Keep count of fishes ready to reproduce
 		last0 := fishes[0]
@@ -65,13 +65,13 @@ func main() {
 	part2(utils.RunParams{Sample: false})
 }
 
-func getInput(params utils.RunParams) map[int]int {
+func getInput(params utils.RunParams) []int {
 	lines, err := utils.ReadFileToString("06", params)
 	if err != nil {
 		panic(err)
 	}
 
-	result := make(map[int]int)
+	result := make([]int, 9)
 	numbersStr := strings.Split(lines[0], ",")
 	for _, numberStr := range numbersStr {
 		number, err := strconv.Atoi(numberStr)
