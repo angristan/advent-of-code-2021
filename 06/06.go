@@ -31,8 +31,7 @@ func reproduce(fishes []int, days int) int {
 }
 
 func part1(params utils.RunParams) {
-	// each fish as a single number that represents
-	// the number of days until it creates a new lanternfish.
+	// array of days_remaining->fish_count
 	fishes := getInput(params)
 
 	// Problem:
@@ -45,8 +44,7 @@ func part1(params utils.RunParams) {
 }
 
 func part2(params utils.RunParams) {
-	// each fish as a single number that represents
-	// the number of days until it creates a new lanternfish.
+	// array of days_remaining->fish_count
 	fishes := getInput(params)
 
 	// Problem:
@@ -66,11 +64,14 @@ func main() {
 }
 
 func getInput(params utils.RunParams) []int {
+	// each fish as a single number that represents
+	// the number of days until it creates a new lanternfish.
 	lines, err := utils.ReadFileToString("06", params)
 	if err != nil {
 		panic(err)
 	}
 
+	// Convert fish list into array of days_remaining->fish_count
 	result := make([]int, 9)
 	numbersStr := strings.Split(lines[0], ",")
 	for _, numberStr := range numbersStr {
