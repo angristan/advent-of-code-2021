@@ -27,7 +27,7 @@ func part1(params utils.RunParams) {
 func part2(params utils.RunParams) {
 	input := getInput(params)
 
-	_, max := findMinAndMax(input)
+	max, _ := stats.Max(input)
 
 	tmp := make([]float64, int(max)+1)
 
@@ -37,7 +37,7 @@ func part2(params utils.RunParams) {
 		}
 	}
 
-	res, _ := findMinAndMax(tmp)
+	res, _ := stats.Min(tmp)
 
 	fmt.Println("Part 2:", int(res))
 
@@ -48,20 +48,6 @@ func getFuel(start float64, end float64) float64 {
 
 	// https://math.stackexchange.com/a/593320
 	return float64(((n * n) + n) / 2)
-}
-
-func findMinAndMax(a []float64) (min float64, max float64) {
-	min = a[0]
-	max = a[0]
-	for _, value := range a {
-		if value < min {
-			min = value
-		}
-		if value > max {
-			max = value
-		}
-	}
-	return min, max
 }
 
 func main() {
