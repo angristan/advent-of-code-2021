@@ -89,18 +89,19 @@ func getScore(line []string) int {
 }
 
 func getMissingChars(line []string) []string {
+	matchingChars := map[string]string{
+		"(": ")",
+		"[": "]",
+		"{": "}",
+		"<": ">",
+	}
+
 	result := []string{}
 
 	for _, char := range line {
 		switch char {
-		case "(":
-			result = append(result, ")")
-		case "[":
-			result = append(result, "]")
-		case "{":
-			result = append(result, "}")
-		case "<":
-			result = append(result, ">")
+		case "(", "[", "{", "<":
+			result = append(result, matchingChars[char])
 		}
 	}
 
@@ -117,53 +118,21 @@ type LineStatusResult struct {
 }
 
 func getLineStatus(line []string) LineStatusResult {
+	matchingChars := map[string]string{
+		")": "(",
+		"]": "[",
+		"}": "{",
+		">": "<",
+	}
+
 	encounteredClosingChar := true
 	for encounteredClosingChar {
 		encounteredClosingChar = false
 	myloop:
 		for i, char := range line {
 			switch char {
-			case ")":
-				if line[i-1] == "(" {
-					line = remove(line, i-1)
-					line = remove(line, i-1)
-					encounteredClosingChar = true
-					break myloop
-				} else {
-					return LineStatusResult{
-						status:         StatusCorrupted,
-						illegalChar:    char,
-						remainingChars: line,
-					}
-				}
-			case "}":
-				if line[i-1] == "{" {
-					line = remove(line, i-1)
-					line = remove(line, i-1)
-					encounteredClosingChar = true
-					break myloop
-				} else {
-					return LineStatusResult{
-						status:         StatusCorrupted,
-						illegalChar:    char,
-						remainingChars: line,
-					}
-				}
-			case "]":
-				if line[i-1] == "[" {
-					line = remove(line, i-1)
-					line = remove(line, i-1)
-					encounteredClosingChar = true
-					break myloop
-				} else {
-					return LineStatusResult{
-						status:         StatusCorrupted,
-						illegalChar:    char,
-						remainingChars: line,
-					}
-				}
-			case ">":
-				if line[i-1] == "<" {
+			case ")", "]", "}", ">":
+				if line[i-1] == matchingChars[char] {
 					line = remove(line, i-1)
 					line = remove(line, i-1)
 					encounteredClosingChar = true
